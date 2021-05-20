@@ -20,11 +20,11 @@ const pizzaController = {
     // get one pizza by id
     getPizzaById({ params }, res) {
         Pizza.findOne({ _id: params.id })
-        .populate({
-            path: 'comments',
-            select: '-__v'
-          })
-          .select('-__v')
+            .populate({
+                path: 'comments',
+                select: '-__v'
+            })
+            .select('-__v')
             .then(dbPizzaData => {
                 // If no pizza is found, send 404
                 if (!dbPizzaData) {
@@ -48,7 +48,7 @@ const pizzaController = {
 
     // update pizza by id
     updatePizza({ params, body }, res) {
-        Pizza.findOneAndUpdate({ _id: params.id }, body, { new: true })
+        Pizza.findOneAndUpdate({ _id: params.id }, body, { new: true, runValidators: true })
             .then(dbPizzaData => {
                 if (!dbPizzaData) {
                     res.status(404).json({ message: 'No pizza found with this id!' });
